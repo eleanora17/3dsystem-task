@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 
 // Create an instance of axios with default settings
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080', // Set the base URL for all requests
+  baseURL: 'https://threedsystem-task.onrender.com', // Set the base URL for all requests
   timeout: 10000, // Set a timeout limit for requests (optional)
   headers: {
     'Content-Type': 'application/json', // Set default headers (optional)
