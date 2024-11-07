@@ -4,21 +4,21 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const { Sequelize, DataTypes } = require("sequelize");
 
-// Initialize Express app
+
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Middleware
+
 app.use(cors());
 app.use(bodyParser.json());
 
-// Initialize Sequelize with SQLite
+
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage: "database.db", // SQLite database file
+  storage: "database.db", 
 });
 
-// Define the Employee model
+
 const Employee = sequelize.define("Employee", {
   name: {
     type: DataTypes.STRING,
@@ -39,7 +39,7 @@ const Employee = sequelize.define("Employee", {
   },
 });
 
-// Sync the database without forcing table recreation
+
 sequelize
   .sync()
   .then(() => {
@@ -47,7 +47,7 @@ sequelize
   })
   .catch((err) => console.error("Error syncing database:", err));
 
-// CRUD Routes for Employee
+
 
 // Create a new employee
 app.post("/employees", async (req, res) => {
@@ -57,14 +57,14 @@ app.post("/employees", async (req, res) => {
     // Check if an employee with the same email already exists
     const existingEmployee = await Employee.findOne({ where: { email } });
     if (existingEmployee) {
-      return res.status(409).json({ error: "Email already exists." }); // 409 Conflict
+      return res.status(409).json({ error: "Email already exists." });
     }
 
     // Create the new employee if the email does not exist
     const employee = await Employee.create(req.body);
-    res.status(201).json(employee); // Return created employee data
+    res.status(201).json(employee);
   } catch (error) {
-    res.status(400).json({ error: error.message }); // Handle other errors
+    res.status(400).json({ error: error.message }); 
   }
 });
 
@@ -86,9 +86,6 @@ app.get("/employees", async (_req, res) => {
 app.get("/employees/all", async (_req, res) => {
   try {
     const employees = await Employee.findAll({
-      // where: {
-      //   isDiscarded: 0,
-      // },
     });
     res.json(employees);
   } catch (error) {
@@ -146,9 +143,6 @@ app.delete("/employees/:id", async (req, res) => {
     const employee = await Employee.findByPk(req.params.id);
     if (employee) {
       employee.update({ ["isDiscarded"]: true });
-      // employee.set("isDiscarded", true);
-      // await employee.save();
-      // await employee.destroy();
       res.json({ message: "Employee deleted" });
     } else {
       res.status(404).json({ error: "Employee not found" });
@@ -158,7 +152,7 @@ app.delete("/employees/:id", async (req, res) => {
   }
 });
 
-// Start server
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

@@ -79,14 +79,12 @@ function Home() {
 
   return (
     <>
-      {/* Navbar */}
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
             <b>Employee Management</b>
           </a>
           <div className="collapse navbar-collapse d-flex justify-content-end align-items-center">
-            {/* Search Form */}
             <form className="d-flex me-3">
               <input
                 type="text"
@@ -97,7 +95,7 @@ function Home() {
               />
             </form>
 
-            {/* Dropdown Menu */}
+
             <Dropdown className="me-2">
               <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                 {selectedFilter}
@@ -115,7 +113,7 @@ function Home() {
               </Dropdown.Menu>
             </Dropdown>
 
-            {/* Add Employee Button */}
+
             <button
               className="btn btn-primary"
               onClick={() => navigate("/add-employee")}
@@ -126,7 +124,7 @@ function Home() {
         </div>
       </nav>
 
-      {/* Employee Table */}
+
       <div className="container mt-5">
         <table className="table table-striped">
           <thead>
@@ -139,7 +137,6 @@ function Home() {
           <tbody>
             {filteredEmployees.map((employee, index) => (
               <tr key={employee.id}>
-                {/* Use index + 1 for a consecutive serial number */}
                 <td>{index + 1}</td>
                 <td>{employee.name}</td>
                 <td className="text-end">

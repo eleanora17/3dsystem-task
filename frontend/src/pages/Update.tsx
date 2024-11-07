@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "../../helpers/axiosConfig"; // Import your axios configuration
-import { useNavigate, useParams } from "react-router-dom"; // Import useParams for getting URL parameters
+import axios from "../../helpers/axiosConfig"; 
+import { useNavigate, useParams } from "react-router-dom"; 
 
 interface Employee {
   id: number;
@@ -13,18 +13,18 @@ function Update() {
   const [employee, setEmployee] = useState<Employee | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [loading, setLoading] = useState<boolean>(false);
-  const [apiError, setApiError] = useState<string | null>(null); // State to hold API error message
+  const [apiError, setApiError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>(); // Get the employee ID from the URL
+  const { id } = useParams<{ id: string }>(); 
 
   useEffect(() => {
     const fetchEmployee = async () => {
       try {
-        const response = await axios.get<Employee>(`/employees/${id}`); // Fetch the employee details by ID
+        const response = await axios.get<Employee>(`/employees/${id}`); 
         setEmployee(response.data);
       } catch (error) {
         console.error("Error fetching employee:", error);
-        setApiError("Error fetching employee details."); // Set error if fetching fails
+        setApiError("Error fetching employee details."); 
       }
     };
 
@@ -39,12 +39,12 @@ function Update() {
         [name]: name === "salary" ? Number(value) : value,
       });
 
-      // Clear error for the current field
+
       setErrors({
         ...errors,
         [name]: "",
       });
-      setApiError(null); // Clear API error when the user makes a change
+      setApiError(null); 
     }
   };
 
@@ -62,41 +62,40 @@ function Update() {
       newErrors.salary = "Salary must be a positive number";
     }
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Returns true if there are no errors
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (employee && validate()) {
-      setLoading(true); // Set loading state to true
+      setLoading(true); 
       try {
         const response = await axios.put<Employee>(
           `/employees/${id}`,
           employee
-        ); // Update the employee
+        ); 
         console.log("Employee updated:", response.data);
-        setLoading(false); // Reset loading state
-        navigate("/"); // Redirect to the employees list page
+        setLoading(false); 
+        navigate("/"); 
       } catch (error: any) {
         console.error("Error updating employee:", error);
-        setLoading(false); // Reset loading state on error
+        setLoading(false);
 
-        // Handle API error responses
+        
         if (error.response) {
           if (error.response.status === 409) {
-            setApiError("Email already exists. Please use a different email."); // Specific error for existing email
+            setApiError("Email already exists. Please use a different email."); 
           } else {
-            setApiError("An error occurred while updating the employee."); // General error message
+            setApiError("An error occurred while updating the employee."); 
           }
         } else {
-          setApiError("Network error. Please try again later."); // Handle network errors
+          setApiError("Network error. Please try again later."); 
         }
       }
     }
   };
 
-  if (!employee) return <div>Loading...</div>; // Display loading message while fetching
-
+  if (!employee) return <div>Loading...</div>; 
   return (
     <div className="container mt-5">
       <h2>Update Employee</h2>
@@ -106,7 +105,7 @@ function Update() {
         </div>
       )}
       {apiError && <div className="alert alert-danger">{apiError}</div>}{" "}
-      {/* Display API error if exists */}
+    
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">

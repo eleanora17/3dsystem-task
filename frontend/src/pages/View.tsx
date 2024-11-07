@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from '../../helpers/axiosConfig'; // Import your axios configuration
-import { useParams } from 'react-router-dom'; // Import useParams to get the ID from the URL
+import axios from '../../helpers/axiosConfig'; 
+import { useParams } from 'react-router-dom'; 
 import { useNavigate } from 'react-router-dom';
 
 interface Employee {
@@ -11,20 +11,20 @@ interface Employee {
 }
 
 function View() {
-  const { id } = useParams<{ id: string }>(); // Get the employee ID from the URL parameters
-  const [employee, setEmployee] = useState<Employee | null>(null); // State to hold employee data
-  const [loading, setLoading] = useState<boolean>(true); // Loading state
+  const { id } = useParams<{ id: string }>(); 
+  const [employee, setEmployee] = useState<Employee | null>(null); 
+  const [loading, setLoading] = useState<boolean>(true); 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEmployee = async () => {
       try {
-        const response = await axios.get<Employee>(`/employees/${id}`); // Fetch employee data by ID
-        setEmployee(response.data); // Set the employee data in state
+        const response = await axios.get<Employee>(`/employees/${id}`); 
+        setEmployee(response.data); 
       } catch (error) {
         console.error('Error fetching employee:', error);
       } finally {
-        setLoading(false); // Reset loading state
+        setLoading(false); 
       }
     };
 
@@ -36,7 +36,7 @@ function View() {
   }
 
   if (!employee) {
-    return <div>No employee found.</div>; // Handle case when employee is not found
+    return <div>No employee found.</div>; 
   }
 
 return (
@@ -44,7 +44,6 @@ return (
     <div className="row">
       <div className="col-md-6">
         <h3 className="text-center mb-4">Employee Details</h3>
-        {/* Adjust the width to fit the table properly */}
         <table className="table table-striped">
           <thead>
             <tr>
@@ -61,7 +60,6 @@ return (
             </tr>
             <tr>
               <td colSpan={2} className="text-center">
-                {/* Center the buttons in this row */}
                 <button
                   className="btn btn-primary me-2"
                   onClick={() => navigate(`/update-employee/${employee.id}`)}

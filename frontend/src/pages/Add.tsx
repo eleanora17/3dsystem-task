@@ -18,9 +18,9 @@ function Add() {
   });
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [loading, setLoading] = useState<boolean>(false); // Loading state
-  const [apiError, setApiError] = useState<string | null>(null); // State to hold API error message
-  const navigate = useNavigate(); // Hook for navigation
+  const [loading, setLoading] = useState<boolean>(false); 
+  const [apiError, setApiError] = useState<string | null>(null); 
+  const navigate = useNavigate(); 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,12 +29,12 @@ function Add() {
       [name]: name === "salary" ? Number(value) : value,
     });
 
-    // Clear error for the current field
+    
     setErrors({
       ...errors,
       [name]: "",
     });
-    setApiError(null); // Clear API error when the user makes a change
+    setApiError(null); 
   };
 
   const validate = () => {
@@ -51,33 +51,33 @@ function Add() {
       newErrors.salary = "Salary must be a positive number";
     }
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Returns true if there are no errors
+    return Object.keys(newErrors).length === 0; 
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validate()) {
-      setLoading(true); // Set loading state to true
+      setLoading(true); 
       try {
         const response = await axios.post<Employee>("/employees", employee);
         console.log("Employee added:", response.data);
         setEmployee({ name: "", email: "", salary: 0, isDiscarded: false });
-        setLoading(false); // Reset loading state
-        navigate("/"); // Redirect to the employees list page
+        setLoading(false); 
+        navigate("/"); 
       } catch (error: any) {
         console.error("Error adding employee:", error);
-        setLoading(false); // Reset loading state on error
+        setLoading(false); 
 
-        // Handle API error responses
+       
         if (error.response) {
-          // If the error has a response from the server
+       
           if (error.response.status === 409) {
-            setApiError("Email already exists. Please use a different email."); // Specific error for existing email
+            setApiError("Email already exists. Please use a different email."); 
           } else {
-            setApiError("An error occurred while adding the employee."); // General error message
+            setApiError("An error occurred while adding the employee.");
           }
         } else {
-          setApiError("Network error. Please try again later."); // Handle network errors
+          setApiError("Network error. Please try again later."); 
         }
       }
     }
