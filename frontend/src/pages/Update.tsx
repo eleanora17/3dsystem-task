@@ -36,7 +36,7 @@ function Update() {
     if (employee) {
       setEmployee({
         ...employee,
-        [name]: name === "salary" ? Number(value) : value,
+        [name] : value,
       });
 
 

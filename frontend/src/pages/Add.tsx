@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "../../helpers/axiosConfig"; // Import your axios configuration
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import axios from "../../helpers/axiosConfig"; 
+import { useNavigate } from "react-router-dom"; 
 
 interface Employee {
   name: string;
@@ -26,7 +26,7 @@ function Add() {
     const { name, value } = e.target;
     setEmployee({
       ...employee,
-      [name]: name === "salary" ? Number(value) : value,
+      [name] : value,
     });
 
     
@@ -92,7 +92,6 @@ function Add() {
         </div>
       )}
       {apiError && <div className="alert alert-danger">{apiError}</div>}{" "}
-      {/* Display API error if exists */}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
